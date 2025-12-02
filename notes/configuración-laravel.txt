@@ -1,0 +1,9 @@
+Pasos para arrancar el servidor local de laravel
+
+Abrir 2 terminales bash
+
+En una escribir php artisan serve (para el motor)
+
+Y en la otra npm run dev (para la pintura)
+
+En el navegador escribir localhost http://127.0.0.1:8000/employees para ingresar al entorno de trabajo
