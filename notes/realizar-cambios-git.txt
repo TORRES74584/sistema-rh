@@ -1,0 +1,20 @@
+1. Prepara los cambios (add)
+Esto le dice a Git: "Junta todos los archivos que modifiqué (Controlador, Vista, Modelo...)".
+
+Bash
+
+git add .
+
+2. Toma la foto (commit)
+Esto guarda la versión en tu computadora. Es importante poner un mensaje claro de qué hiciste.
+
+Bash
+
+git commit -m "Agregada funcionalidad de fotos de perfil y almacenamiento"
+
+3. Sube a la nube (push)
+Esto envía la foto a GitHub para que esté segura.
+
+Bash
+
+git push

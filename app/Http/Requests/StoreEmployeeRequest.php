@@ -27,6 +27,11 @@ class StoreEmployeeRequest extends FormRequest
             'email' => 'required|email|unique:employees,email',
             'position' => 'required|string|max:256',
             'hire_date' => 'required|date',
+            // NUEVA REGLA:
+            // nullable: No es obligatorio subir foto.
+            // image: Debe ser jpg, png, bmp, etc.
+            // max:2048: Máximo 2MB (el número es en kilobytes).
+            'photo' => 'nullable|image|max:2048',
         ];
     }
 }

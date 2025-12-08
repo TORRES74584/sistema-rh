@@ -34,6 +34,7 @@ class UpdateEmployeeRequest extends FormRequest
             // 'unique:tabla,columna,ID_A_IGNORAR'
             // Esto le dice: Revisa si el email existe, pero ignora el ID de este empleado actual.
             'email' => 'required|email|unique:employees,email,' . $employee->id,
+            'photo' => 'nullable|image|max:2048',
         ];
     }
 }

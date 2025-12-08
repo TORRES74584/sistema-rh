@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('employees.update', $employee->id) }}">
+                    <form method="POST" action="{{ route('employees.update', $employee->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT') ```
                         <div>
@@ -35,6 +35,18 @@
                         <div class="mt-4">
                             <label for="hire_date">Fecha de Contratación</label>
                             <input id="hire_date" class="block mt-1 w-full" type="date" name="hire_date" value="{{ old('hire_date', $employee->hire_date) }}" required />
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="photo" class="block font-medium text-sm text-gray-700">Foto del Empleado</label>
+
+                            @if($employee->photo)
+                            <div class="mb-2">
+                                <img src="{{ asset('storage/' . $employee->photo) }}" alt="Foto actual" class="h-20 w-20 rounded-full object-cover">
+                            </div>
+                            @endif
+
+                            <input id="photo" class="block mt-1 w-full border border-gray-300 rounded-md shadow-sm p-2" type="file" name="photo">
                         </div>
 
                         <div class="flex items-center justify-end mt-4">

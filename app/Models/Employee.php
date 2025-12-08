@@ -19,6 +19,7 @@ class Employee extends Model
         'first_name',
         'last_name',
         'email',
+        'photo', // Nueva Columna para fotos de los empleados
         'position',
         'hire_date',
     ];

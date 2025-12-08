@@ -40,6 +40,7 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Puesto</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Foto</th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Editar</span>
                                 </th>
@@ -48,6 +49,15 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($employees as $employee)
                             <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if ($employee->photo)
+                                    <img src="{{ asset('storage/' . $employee->photo) }}" alt="Foto de {{ $employee->first_name }}" class="h-10 w-10 rounded-full object-cover">
+                                    @else
+                                    <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
+                                        {{ substr($employee->first_name, 0, 1) }}{{ substr($employee->last_name, 0, 1) }}
+                                    </div>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $employee->first_name }} {{ $employee->last_name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $employee->email }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $employee->position }}</td>
@@ -64,7 +74,8 @@
                             </tr>
                             @endforeach
                         </tbody>
-                    </table> <div class="mt-4">
+                    </table>
+                    <div class="mt-4">
                         {{ $employees->links() }}
                     </div>
 

@@ -6,6 +6,7 @@ use App\Models\Employee; // 1.- IMPORTANDO EL MODELO EMPLEADO
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; // IMPORTANDO EL MODELO Almacenamiento
 
 class EmployeeController extends Controller
 {
@@ -48,8 +49,20 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        // 1. Crear el empleado (Laravel ya validó los datos automáticamente antes de entrar aquí)
-        Employee::create($request->validated());
+        // 1. Obtenemos los datos validados del "Guardia"
+        $data = $request->validated();
+
+        // 2. ¿El usuario subió una foto?
+        if ($request->hasFile('photo')) {
+            // A. Guardamos el archivo en la carpeta 'employees_photos' dentro del disco 'public'
+            $path = $request->file('photo')->store('employees_photos', 'public');
+
+            // B. Guardamos LA RUTA (ej: "employees_photos/foto.jpg") en el array de datos
+            $data['photo'] = $path;
+        }
+
+        // 3. Creamos el empleado usando el array $data (que ya incluye la ruta de la foto si la hubo)
+        Employee::create($data);
 
         // 2. Redirigir al usuario a la lista de empleados con un mensaje de éxito
         return redirect()->route('employees.index')->with('success', '¡Empleado creado exitosamente!');
@@ -77,12 +90,25 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        // Ya no hay validación aquí, el "Guardia" lo hizo en la entrada
+        // 1. Obtenemos los datos validados (nombre, email, etc.)
+        $data = $request->validated();
 
-        // Actualizamos
-        $employee->update($request->validated());
+        // 2. ¿Subieron una foto NUEVA?
+        if ($request->hasFile('photo')) {
+            
+            // A. Si el empleado ya tenía una foto vieja, la borramos del disco
+            if ($employee->photo) {
+                Storage::disk('public')->delete($employee->photo);
+            }
 
-        // Redirige con mensaje de éxito
+            // B. Guardamos la nueva foto
+            $data['photo'] = $request->file('photo')->store('employees_photos', 'public');
+        }
+
+        // 3. Actualizamos la base de datos
+        $employee->update($data);
+
+        // 4. Redirigimos
         return redirect()->route('employees.index')->with('success', '¡Empleado actualizado exitosamente!');
     }
 
