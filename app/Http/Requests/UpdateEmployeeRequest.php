@@ -35,6 +35,7 @@ class UpdateEmployeeRequest extends FormRequest
             // Esto le dice: Revisa si el email existe, pero ignora el ID de este empleado actual.
             'email' => 'required|email|unique:employees,email,' . $employee->id,
             'photo' => 'nullable|image|max:2048',
+            'department_id' => 'required|exists:departments,id',
         ];
     }
 }

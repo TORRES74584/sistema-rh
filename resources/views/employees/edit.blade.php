@@ -33,6 +33,18 @@
                         </div>
 
                         <div class="mt-4">
+                            <label for="department_id" class="block font-medium text-sm text-gray-700">Departamento</label>
+                            <select id="department_id" name="department_id" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                @foreach ($departments as $department)
+                                <option value="{{ $department->id }}"
+                                    {{ $employee->department_id == $department->id ? 'selected' : '' }}>
+                                    {{ $department->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mt-4">
                             <label for="hire_date">Fecha de Contratación</label>
                             <input id="hire_date" class="block mt-1 w-full" type="date" name="hire_date" value="{{ old('hire_date', $employee->hire_date) }}" required />
                         </div>

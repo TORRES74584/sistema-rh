@@ -32,6 +32,7 @@ class StoreEmployeeRequest extends FormRequest
             // image: Debe ser jpg, png, bmp, etc.
             // max:2048: Máximo 2MB (el número es en kilobytes).
             'photo' => 'nullable|image|max:2048',
+            'department_id' => 'required|exists:departments,id',
         ];
     }
 }

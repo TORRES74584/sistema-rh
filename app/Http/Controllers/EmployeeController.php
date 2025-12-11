@@ -7,6 +7,7 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; // IMPORTANDO EL MODELO Almacenamiento
+use App\Models\Department; // IMPORTANDO EL MODELO DEPARTAMENTO
 
 class EmployeeController extends Controller
 {
@@ -40,8 +41,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        // Simplemente devuelve la vista que contiene el formulario de creación
-        return view('employees.create');
+        // Obtenemos todos los departamentos de la base de datos
+        $departments = Department::all();
+
+        // Se le pasa a la vista 
+        return view('employees.create', ['departments' => $departments]);
     }
 
     /**
@@ -82,7 +86,8 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         // Laravel automáticamente encuentra el empleado por su ID gracias al "Route Model Binding"
-        return view('employees.edit', ['employee' => $employee]);
+        $departments = Department::all();
+        return view('employees.edit', ['employee' => $employee, 'departments' => $departments]);
     }
 
     /**
